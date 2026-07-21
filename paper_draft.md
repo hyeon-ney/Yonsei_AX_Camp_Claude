@@ -1,113 +1,113 @@
-# Pressure-Drag Reduction, Not Induced Drag, Explains the Propulsive Efficiency Gain of Cicada-Inspired Chord Redistribution
+# 매미 유래 코드 재배치의 추진 효율 향상은 유도항력이 아닌 압력항력 감소로 설명된다
 
-**Author(s):** *[저자명 기입 필요]*
-**Affiliation:** *[소속 기입 필요]*
+**저자:** *[저자명 기입 필요]*
+**소속:** *[소속 기입 필요]*
 
-*(Follow-up analysis of Wei, Z., Wang, S., Farris, S. et al. "Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry." Nat. Commun. 15, 4337 (2024). [1])*
+*(Wei, Z., Wang, S., Farris, S. 외. "Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry." Nat. Commun. 15, 4337 (2024)의 후속 분석. [1])*
 
-> **문서 상태 안내 (반드시 읽을 것):** 이 초안은 원논문[1]이 공개한 CFD 데이터셋(3D-SC, B1, B2, B3)에 대한 **사후 재분석 계획**이며, 실제 CFD 재계산은 아직 수행되지 않았다. 본문의 모든 `[VALUE]`는 재계산이 완료된 뒤 실측값으로 반드시 치환해야 하며, 그 전까지 이 문서를 "결과가 확인된 논문"으로 인용하거나 배포해서는 안 된다. 또한 이 문서에는 실제로 생성된 그림(Figure)이 없다 — 본문에서 그림을 언급하지 않은 것은 이 때문이며, 이는 이전 버전의 오류(존재하지 않는 "Fig. 1a" 인용)를 수정한 것이다. 논문 구조·논리 전개는 [[paper_writing_skill]]과 [[FOL_followup_proposal]]을 만족하도록 작성됨.
+> **문서 상태 안내 (반드시 읽을 것):** 이 초안은 원논문[1]이 공개한 CFD 데이터셋(3D-SC, B1, B2, B3)에 대한 **사후 재분석 계획**이며, 실제 CFD 재계산은 아직 수행되지 않았다. 본문의 모든 `[VALUE]`는 재계산이 완료된 뒤 실측값으로 반드시 치환해야 하며, 그 전까지 이 문서를 "결과가 확인된 논문"으로 인용하거나 배포해서는 안 된다. 또한 이 문서에는 실제로 생성된 그림(Figure)이 없다 — 본문에 실제 이미지 대신 자리 표시(placeholder)만 있는 것은 이 때문이며, 각 placeholder가 어떤 내용을 담아야 하는지는 [[gap-analysis]]에 상세히 기술되어 있다. 논문 구조·논리 전개는 [[paper_writing_skill]]과 [[FOL_followup_proposal]]을 만족하도록 작성됨.
 
 ---
 
-## Abstract
+## 초록(Abstract)
 
-Combining owl-feather serrations with cicada-wing planform geometry has recently been shown to enable propellers that are simultaneously quieter and more propulsively efficient than conventional designs. While the noise-reduction pathway of this hybrid design has been mechanistically resolved down to coherent-vortex-structure (CVS) formation and its regime-dependent suppression of dipole and quadrupole sources, the origin of the efficiency gain was left as an untested hypothesis in that study, attributed only qualitatively to the cicada-derived chord distribution. Here we propose to test this hypothesis directly by decomposing the total aerodynamic drag of the four previously published prototypes (3D-SC, B1, B2, B3) into pressure-drag and viscous/induced-drag components, following standard drag-decomposition practice, using their existing CFD solutions and without generating any new geometry or experiment. If confirmed, we predict that the majority of the propulsive-efficiency gap between the high-efficiency prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) would be accounted for by a reduction in pressure drag, while induced-drag components would remain statistically unchanged. Such a result would confirm that the cicada-derived chord redistribution improves efficiency through a mechanism distinct from, and independent of, the vorticity-based noise-suppression mechanism of the owl serrations, establishing that the two bio-inspired design axes — serration for acoustics, planform for aerodynamics — can be optimized independently.
+부엉이 깃털 세레이션과 매미 날개 평면형(planform) 형상을 결합하면 기존 설계보다 더 조용하면서도 동시에 추진 효율이 더 높은 프로펠러를 만들 수 있다는 것이 최근 보고되었다. 이 하이브리드 설계의 소음 감소 경로는 일관된 소용돌이 구조(coherent vortex structure, CVS) 형성과 그것의 레짐(Reynolds수) 조건부 dipole/quadrupole 소음원 억제까지 메커니즘 차원에서 규명되었으나, 효율 향상의 원인은 해당 연구에서 검증되지 않은 가설로만 남아 있었고, 단지 매미 유래 코드(chord) 분포 형상과의 정성적 상관관계로만 설명되었다. 본 연구는 이 가설을 직접 검증하기 위해, 새로운 형상이나 실험 없이, 기존에 공개된 4개 프로토타입(3D-SC, B1, B2, B3)의 CFD 결과를 이용해 전체 공력 항력을 압력항력과 점성/유도항력 성분으로 분리하는, 표준적인 항력 분리 절차를 적용할 것을 제안한다. 만약 이 가설이 확인된다면, 고효율 프로토타입(3D-SC, B1)과 기준 프로토타입(B2, B3) 간 추진 효율 차이의 대부분이 압력항력 감소로 설명되는 반면, 유도항력 성분은 통계적으로 유의미하게 변하지 않을 것으로 예측된다. 이러한 결과는 매미 유래 코드 재배치가 부엉이 세레이션의 와도 기반 소음 억제 메커니즘과는 별개의, 독립적인 메커니즘을 통해 효율을 향상시킨다는 것을 확인시켜줄 것이며, 이는 두 개의 생체모방 설계 축 — 음향을 위한 세레이션과 공력을 위한 평면형 — 을 독립적으로 최적화할 수 있음을 시사한다.
 
 *(참고: Nature Communications 등 주요 저널 관행상 Abstract에는 참고문헌 번호를 넣지 않는다 — 초록만 단독으로 읽힐 수 있어 문헌번호가 본문 없이는 의미가 없기 때문. 이전 버전에서 Abstract에 [1][2]를 넣은 것은 이 관행을 어긴 실수였다.)*
 
 ---
 
-## 1. Introduction
+## 1. 서론(Introduction)
 
-A recent study demonstrated that combining owl-feather serrations with cicada-wing planform geometry enables propellers that are simultaneously quieter and more propulsively efficient than conventional designs [1]. This builds on a long tradition of drawing engineering inspiration from biological structures shaped by selective pressure, and in particular on a substantial body of work exploiting the serrated leading-edge feather morphology that allows owls to achieve near-silent flight [2,3]. Prior bio-inspired propeller designs exploited two-dimensional analogues of this serration to reduce tonal and broadband noise, but such simplified two-dimensional patterns limit the achievable noise reduction and often trade off against aerodynamic performance [1].
+최근 한 연구는 부엉이 깃털 세레이션과 매미 날개 평면형 형상을 결합하면 기존 설계보다 조용하면서도 동시에 추진 효율이 더 높은 프로펠러를 만들 수 있음을 보였다 [1]. 이는 선택압에 의해 형성된 생물학적 구조에서 공학적 영감을 얻어온 오랜 전통, 특히 부엉이가 거의 무음에 가까운 비행을 가능하게 하는 톱니 모양의 앞전(leading-edge) 깃털 형태를 활용해온 상당한 규모의 연구 흐름 위에 놓여 있다 [2,3]. 기존의 생체모방 프로펠러 설계는 이러한 세레이션의 2차원적 유사 형태를 활용해 톤 소음과 광대역 소음을 줄여왔지만, 이러한 단순화된 2차원 패턴은 달성 가능한 소음 감소 정도를 제한하고 공력 성능과의 트레이드오프를 자주 발생시킨다 [1].
 
-Wei et al. [1] recently integrated a fully three-dimensional, sinusoidal serration topology — inspired directly by the 3D morphology of owl feathers rather than simplified 2D patterns — with a cicada-wing-derived planform defined by fifth-order polynomial chord distributions on the leading and trailing edges. The resulting hybrid prototype (3D-SC) achieved up to 5.5 dB of sound-pressure-level reduction and a greater than 20% increase in propulsive efficiency relative to benchmark propellers [1]. In that work, the noise reduction was explained through a detailed, Reynolds-number-conditioned mechanism: at low rotational speed, serration-induced coherent vortex structures (CVS) reduce harmonic loading and suppress dipole (tonal) noise; at high rotational speed, the same CVS are preserved longer, delaying cascade to dissipative eddies and suppressing quadrupole (broadband) noise [1].
+Wei 등 [1]은 최근 부엉이 깃털의 3차원 형태에서 직접 영감을 받은, 단순화된 2D 패턴이 아닌 완전한 3차원 sinusoidal 세레이션 형상을, 앞전과 뒷전에 5차 다항식 코드 분포로 정의되는 매미 날개 유래 평면형과 결합했다. 그 결과물인 하이브리드 프로토타입(3D-SC)은 기준 프로펠러 대비 최대 5.5dB의 음압레벨(SPL) 감소와 20% 이상의 추진 효율 향상을 달성했다 [1]. 해당 연구에서 소음 감소는 Reynolds수 조건에 따라 세분화된 메커니즘으로 설명되었다: 저속 회전에서는 세레이션에 의해 유도된 일관된 소용돌이 구조(CVS)가 하중 변동(harmonic loading)을 줄여 dipole(톤) 소음을 억제하고, 고속 회전에서는 동일한 CVS가 더 오래 유지되어 소산성 와류로의 캐스케이드를 지연시킴으로써 quadrupole(광대역) 소음을 억제한다 [1].
 
-The efficiency side of that result, however, was supported only at the level of correlation: the cicada-derived planform was associated with higher propulsive efficiency, but no intermediate fluid-mechanical mechanism was proposed or tested [1]. This is a meaningful gap. Unlike the noise pathway — where each step (vorticity enhancement → CVS formation → dipole/quadrupole suppression) is physically motivated and independently falsifiable — the efficiency claim in [1] rests on a single, unconditioned implication: cicada-shape → efficiency. Because propulsive efficiency is a composite quantity determined by multiple drag components — pressure drag from separation and pressure recovery, induced drag from tip/wake vortices, and viscous/skin-friction drag [4] — this correlation is consistent with several distinct and mutually exclusive physical explanations.
+그러나 효율 측면의 결과는 상관관계 수준에서만 뒷받침되었다: 매미 유래 평면형은 더 높은 추진 효율과 연관되어 있었지만, 그 사이를 잇는 유체역학적 메커니즘은 제안되지도, 검증되지도 않았다 [1]. 이는 의미 있는 논리적 공백이다. 소음 경로 — 각 단계(와도 강화 → CVS 형성 → dipole/quadrupole 억제)가 물리적으로 동기부여되어 있고 독립적으로 반증 가능한 — 와 달리, [1]의 효율 주장은 단 하나의 조건 없는 함의, 즉 "매미 형상 → 효율"에 의존한다. 추진 효율은 압력항력(박리 및 압력 회복에서 기인), 유도항력(팁/후류 와류에서 기인), 점성/표면마찰 항력이라는 여러 항력 성분에 의해 결정되는 복합량이기 때문에 [4], 이 상관관계는 서로 다르고 상호 배타적인 여러 물리적 설명과 모두 부합할 수 있다.
 
-We hypothesize specifically that the cicada-inspired chord redistribution improves efficiency by reducing pressure drag — i.e., by reshaping the chordwise pressure distribution to delay or weaken flow separation — rather than by reducing induced drag or viscous drag. This hypothesis is directly testable without any new experiment: Wei et al. [1] already published CFD solutions for four prototypes spanning the serration/planform design space (3D-SC: owl serration + cicada planform; B1: a second cicada-planform variant; B2, B3: baseline/conventional planforms), from which pressure- and viscous/induced-drag components can, in principle, be separately integrated [4]. We propose to perform this decomposition and evaluate whether the efficiency ranking across the four prototypes tracks the pressure-drag ranking, the induced-drag ranking, or neither.
+우리는 구체적으로, 매미 유래 코드 재배치가 코드 방향의 압력 분포를 재구성하여 유동 박리를 지연시키거나 약화시킴으로써 — 즉 압력항력을 감소시켜서 — 효율을 향상시킨다는 가설을 세운다. 이는 유도항력이나 점성항력 감소가 아니다. 이 가설은 새로운 실험 없이 직접 검증 가능하다: Wei 등 [1]은 이미 세레이션/평면형 설계 공간을 아우르는 4개 프로토타입(3D-SC: 부엉이 세레이션+매미 평면형; B1: 두 번째 매미 평면형 변형; B2, B3: 기준/기존 평면형)에 대한 CFD 해를 공개했으며, 여기서 압력항력과 점성/유도항력 성분을 원칙적으로 분리해 적분할 수 있다 [4]. 우리는 이 분리 작업을 수행하여, 4개 프로토타입 간 효율 순위가 압력항력 순위를 따르는지, 유도항력 순위를 따르는지, 아니면 둘 다 아닌지를 평가할 것을 제안한다.
 
 ---
 
-## 2. Proposed Results *(pending CFD reanalysis — see status note above)*
+## 2. 제안된 결과(Proposed Results) *(CFD 재분석 대기 중 — 상단 문서 상태 안내 참조)*
 
-The subsections below describe the analysis to be performed and the falsifiable predictions each step makes, mapped to the FOL steps in [[FOL_followup_proposal]]. **No values in this section are measured yet.**
+아래 하위 섹션들은 [[FOL_followup_proposal]]의 FOL 단계에 대응하여 수행될 분석과 각 단계가 만드는 반증 가능한 예측을 기술한다. **이 섹션의 어떤 값도 아직 측정되지 않았다.**
 
-### 2.1 Chord redistribution alters the drag decomposition (cf. FOL step 8a)
+### 2.1 코드 재배치가 항력 분리 결과를 바꾼다 (FOL 8단계 참조)
 
-The four prototypes reported in [1] differ systematically in their leading/trailing-edge chord distribution functions: 3D-SC and B1 incorporate the cicada-derived fifth-order polynomial chord redistribution, while B2 and B3 use conventional planforms [1]. This is the structural precondition (ChordRedist(x)) required before any drag-mechanism claim can be evaluated, and requires no new analysis to confirm — it is already established in [1].
+[1]에 보고된 4개 프로토타입은 앞전/뒷전 코드 분포 함수에서 체계적으로 다르다: 3D-SC와 B1은 매미 유래 5차 다항식 코드 재배치를 채택한 반면, B2와 B3는 기존 평면형을 사용한다 [1]. 이는 어떤 항력 메커니즘 주장이든 평가되기 전에 필요한 구조적 전제조건(ChordRedist(x))이며, 이미 [1]에서 확립되어 있어 추가 분석 없이 확인 가능하다.
 
-**[FIGURE 1 PLACEHOLDER — planform overlay, chord-coefficient comparison, and CAD renderings of the four prototypes; full description in [[gap-analysis.md]] §Figure 1]**
+**[FIGURE 1 자리 표시 — 4개 프로토타입의 평면형 오버레이, 코드 계수 비교, CAD 렌더링. 상세 설명은 [[gap-analysis]] §Figure 1 참조]**
 
-### 2.2 Pressure drag, not induced drag, is predicted to track the efficiency gap (cf. FOL step 8b — hypothesis test)
+### 2.2 압력항력이, 유도항력이 아니라, 효율 차이를 추적할 것으로 예측된다 (FOL 8b단계 — 핵심 가설 검증)
 
-**Planned analysis:** decompose the total drag coefficient recovered from each prototype's CFD solution in [1] into pressure drag $C_{D,p}$, induced drag $C_{D,i}$, and viscous drag $C_{D,v}$, using the surface-pressure and wake-momentum methods described in §4 (Methods).
+**계획된 분석:** [1]의 각 프로토타입 CFD 해에서 회수한 전체 항력계수를 §4(Methods)에 기술된 표면압력·후류운동량 방법을 이용해 압력항력 $C_{D,p}$, 유도항력 $C_{D,i}$, 점성항력 $C_{D,v}$로 분리한다.
 
-**Prediction table (to be filled with measured values):**
+**예측 표 (실측값으로 채워야 함):**
 
-| Prototype | Chord redistribution | $C_{D,p}$ | $C_{D,i}$ | $C_{D,v}$ | Propulsive efficiency η |
+| 프로토타입 | 코드 재배치 여부 | $C_{D,p}$ | $C_{D,i}$ | $C_{D,v}$ | 추진 효율 η |
 |---|---|---|---|---|---|
-| 3D-SC | yes | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (reported: +20%+ vs. baseline [1]) |
-| B1 | yes | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% |
-| B2 | no | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (baseline) |
-| B3 | no | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (baseline) |
+| 3D-SC | 예 | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (보고값: 기준 대비 +20% 이상 [1]) |
+| B1 | 예 | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% |
+| B2 | 아니오 | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (기준) |
+| B3 | 아니오 | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (기준) |
 
-**Falsifiable prediction:** if the hypothesis holds, $C_{D,p}^{3D\text{-}SC}, C_{D,p}^{B1} < C_{D,p}^{B2}, C_{D,p}^{B3}$ with statistical significance, while $\Delta C_{D,i}$ across the group is not significant. A regression of η against $C_{D,p}$ should yield higher $R^2$ than η against $C_{D,i}$.
+**반증 가능한 예측:** 가설이 성립한다면, $C_{D,p}^{3D\text{-}SC}, C_{D,p}^{B1} < C_{D,p}^{B2}, C_{D,p}^{B3}$가 통계적으로 유의하게 성립하는 반면, 그룹 간 $\Delta C_{D,i}$는 유의하지 않아야 한다. η를 $C_{D,p}$에 회귀했을 때의 $R^2$가 $C_{D,i}$에 대한 회귀보다 높아야 한다.
 
-**[FIGURE 2 PLACEHOLDER — surface-pressure CFD contours, wake velocity-deficit contours, stacked drag-component bar chart, and efficiency-vs-drag regression scatter; full description in [[gap-analysis.md]] §Figure 2 — this is the figure that most directly evidences the core hypothesis (FOL step 8b)]**
+**[FIGURE 2 자리 표시 — 표면압력 CFD 컨투어, 후류 속도결손 컨투어, 항력 성분 누적 막대그래프, 효율-항력 회귀 산점도. 상세 설명은 [[gap-analysis]] §Figure 2 참조 — 핵심 가설(FOL 8b)을 가장 직접적으로 뒷받침하는 그림]**
 
-### 2.3 Pressure-drag reduction is predicted to quantitatively account for the efficiency gain (cf. FOL step 8c)
+### 2.3 압력항력 감소가 효율 향상을 정량적으로 설명할 것으로 예측된다 (FOL 8c단계 참조)
 
-**Planned analysis:** propagate the measured $\Delta C_{D,p}$ between the chord-redistributed prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) through the standard propulsive-efficiency relation [4], and compare the resulting predicted efficiency gain against the >20% efficiency improvement reported in [1]. We will also test whether this relationship holds across both rotational-speed regimes used in the acoustic analysis of [1] (2000 RPM and 5000 RPM), to check whether the efficiency mechanism is Reynolds-number-conditioned as the noise mechanism is [1].
+**계획된 분석:** 코드가 재배치된 프로토타입(3D-SC, B1)과 기준 프로토타입(B2, B3) 간 측정된 $\Delta C_{D,p}$를 표준 추진효율 관계식 [4]에 대입하여, [1]에 보고된 20% 이상의 효율 향상과 비교한다. 또한 이 관계가 [1]의 음향 분석에 사용된 두 회전수 레짐(2000 RPM, 5000 RPM) 모두에서 성립하는지 검증하여, 효율 메커니즘이 소음 메커니즘과 마찬가지로 Reynolds수 조건부인지 확인한다 [1].
 
-**[FIGURE 3 PLACEHOLDER — waterfall decomposition of the efficiency gain, and pressure-drag reduction magnitude compared across 2000/5000 RPM regimes; full description in [[gap-analysis.md]] §Figure 3]**
+**[FIGURE 3 자리 표시 — 효율 향상분의 waterfall 분해, 2000/5000 RPM 레짐 간 압력항력 감소폭 비교. 상세 설명은 [[gap-analysis]] §Figure 3 참조]**
 
-### 2.4 Alternative mechanisms to be ruled out
+### 2.4 배제해야 할 대안 메커니즘
 
-Because the acoustic mechanism in [1] is driven by coherent vortex structures generated by the owl serration, a possible confound is that CVS formation itself alters the pressure field and thus co-varies with pressure drag. **Planned control:** compare B1 (cicada planform, no owl serration) against 3D-SC (both features) [1]; if B1 shows a comparable pressure-drag reduction and efficiency gain to 3D-SC despite lacking the serration-driven CVS mechanism, this would confirm that the efficiency mechanism (planform → pressure drag) and the acoustic mechanism (serration → vorticity) are structurally independent.
+[1]의 음향 메커니즘은 부엉이 세레이션이 생성하는 일관된 소용돌이 구조(CVS)에 의해 구동되므로, CVS 형성 자체가 압력장을 변화시켜 압력항력과 공변할 가능성이 교란변수로 존재한다. **계획된 대조 실험:** B1(매미 평면형, 부엉이 세레이션 없음)을 3D-SC(두 특징 모두 보유)와 비교한다 [1]. 만약 B1이 세레이션 기반 CVS 메커니즘이 전혀 없음에도 3D-SC와 비슷한 수준의 압력항력 감소와 효율 향상을 보인다면, 이는 효율 메커니즘(평면형 → 압력항력)과 음향 메커니즘(세레이션 → 와도)이 구조적으로 독립적임을 확인시켜줄 것이다.
 
-**[FIGURE 4 PLACEHOLDER — 2×2 serration×planform design matrix and direct B1-vs-3D-SC comparison; full description in [[gap-analysis.md]] §Figure 4]**
-
----
-
-## 3. Discussion
-
-If the predictions in §2.2–2.4 are confirmed, this analysis would resolve the logical gap identified at step A8 of the causal model implicit in [1] (CicShape(x) → AeroEff(x)), replacing a single unconditioned implication with a falsifiable three-step mechanism (ChordRedist → PressDragRed → AeroEff) supported by drag-component evidence rather than efficiency correlation alone. Practically, confirming the independence proposed in §2.4 would mean the two bio-inspired design levers reported in [1] — 3D owl-serration topology for acoustic performance, and cicada-derived planform for aerodynamic efficiency — could be tuned separately without cross-interference, simplifying future multi-objective optimization of silent-efficient rotor design.
-
-**Limitations.** This is a post-hoc reanalysis proposal applied to CFD solutions from [1] that were not generated to isolate drag components; residual uncertainty in the pressure/viscous decomposition (surface-integration resolution, turbulence-model sensitivity) will need to be quantified with dedicated grid-convergence and turbulence-model sensitivity studies [4]. If the pressure-drag pathway (§2.2) were instead rejected by the data, the next candidate mechanisms to test — following the same falsifiable-decomposition template — would be effective camber change and boundary-layer separation delay, requiring the same drag-decomposition method applied with additional near-wall flow diagnostics.
+**[FIGURE 4 자리 표시 — 세레이션×평면형 2×2 설계 매트릭스, B1과 3D-SC의 직접 비교. 상세 설명은 [[gap-analysis]] §Figure 4 참조]**
 
 ---
 
-## 4. Methods (planned)
+## 3. 논의(Discussion)
 
-**Data source.** All planned analysis reuses the CFD solutions for the four prototypes (3D-SC, B1, B2, B3) published alongside [1]; no new geometry, mesh, or experiment will be generated.
+§2.2~2.4의 예측이 확인된다면, 이 분석은 [1]에 내재된 인과 모델의 A8 단계(CicShape(x) → AeroEff(x))에서 확인된 논리적 공백을 해소하게 된다. 단일하고 조건 없는 함의를, 효율 상관관계만이 아니라 항력 성분 증거로 뒷받침되는 반증 가능한 3단계 메커니즘(ChordRedist → PressDragRed → AeroEff)으로 대체하는 것이다. 실용적으로, §2.4에서 제안된 독립성이 확인된다면 [1]에 보고된 두 생체모방 설계 레버 — 음향 성능을 위한 3D 부엉이 세레이션 형상과 공력 효율을 위한 매미 유래 평면형 — 을 상호 간섭 없이 별도로 조정할 수 있다는 의미이며, 이는 향후 정숙·고효율 로터 설계의 다목적 최적화를 단순화한다.
 
-**Drag decomposition.** Pressure drag will be computed by integrating static-pressure forces over each blade's wetted surface, projected onto the freestream/thrust axis. Viscous (skin-friction) drag will be computed by integrating wall shear stress over the same surface. Induced drag will be estimated independently via a wake momentum-deficit method applied to the far-wake plane of each solution, following standard aerodynamic decomposition practice [4].
-
-**Statistical comparison.** Prototype-wise drag components and efficiencies will be compared using two-tailed tests across the chord-redistributed group (3D-SC, B1) versus the baseline group (B2, B3); regression of efficiency against each drag component will be performed across all four prototypes.
-
-**Reproducibility.** Post-processing will be applied uniformly across prototypes using identical integration procedures and solver settings as [1], per the verification protocol specified in [[FOL_followup_proposal]].
+**한계.** 이 분석은 항력 성분을 분리하도록 설계되지 않았던 [1]의 CFD 해에 적용하는 사후 재분석 제안이다. 압력/점성 분리에 남아있는 불확실성(표면 적분 해상도, 난류모델 민감도)은 별도의 격자수렴성 및 난류모델 민감도 연구로 정량화되어야 한다 [4]. 만약 압력항력 경로(§2.2)가 데이터에 의해 기각된다면, 동일한 반증 가능-분해 틀을 따르는 다음 후보 메커니즘은 유효 캠버 변화와 경계층 박리 지연이며, 이는 동일한 항력 분리 방법에 추가적인 근벽(near-wall) 유동 진단을 결합해 검증해야 한다.
 
 ---
 
-## Data availability
-The CFD solutions to be reanalyzed are those published with [1] (Zenodo DOI: 10.5281/zenodo.11088631, as cited in [1]; access and licensing terms should be verified directly with that repository before reuse). No new data are generated by this proposal document.
+## 4. 방법(Methods, 계획)
 
-## Code availability
-No analysis code has been written yet. Drag-decomposition post-processing scripts, once written, should be archived in a public repository and linked here before this document is considered a completed manuscript.
+**데이터 출처.** 모든 계획된 분석은 [1]과 함께 공개된 4개 프로토타입(3D-SC, B1, B2, B3)의 CFD 해를 재사용하며, 새로운 형상, 격자, 실험은 생성하지 않는다.
 
-## Acknowledgements
+**항력 분리.** 압력항력은 각 블레이드의 젖음면(wetted surface)에 대해 정압력을 자유흐름/추력 축에 투영하여 적분함으로써 계산한다. 점성(표면마찰) 항력은 동일한 표면에서 벽면 전단응력을 적분하여 계산한다. 유도항력은 각 해의 원거리 후류 평면에 적용한 후류 운동량결손법을 통해 근접 물체 압력/점성 분리와는 독립적으로 추정한다 [4].
+
+**통계 비교.** 프로토타입별 항력 성분과 효율은 코드가 재배치된 그룹(3D-SC, B1)과 기준 그룹(B2, B3) 간 양측 검정으로 비교하며, 4개 프로토타입 전체에 대해 효율과 각 항력 성분 간 회귀 분석을 수행한다.
+
+**재현성.** 후처리는 [[FOL_followup_proposal]]에 명시된 검증 프로토콜에 따라, [1]과 동일한 적분 절차 및 솔버 설정을 사용하여 모든 프로토타입에 균일하게 적용한다.
+
+---
+
+## 데이터 가용성(Data availability)
+재분석 대상 CFD 해는 [1]과 함께 공개된 것이다 (Zenodo DOI: 10.5281/zenodo.11088631, [1]에서 인용됨; 재사용 전 해당 저장소에서 접근 및 라이선스 조건을 직접 확인해야 함). 본 제안 문서 자체는 새로운 데이터를 생성하지 않는다.
+
+## 코드 가용성(Code availability)
+아직 분석 코드는 작성되지 않았다. 항력 분리 후처리 스크립트는 작성 완료 시 공개 저장소에 보관하고 이 문서에 링크해야 하며, 그 전까지 이 문서는 완성된 논문으로 간주될 수 없다.
+
+## 감사의 글(Acknowledgements)
 *[본 저자가 실제 저술 시 펀딩/기관 정보 기입 필요]*
 
-## Author contributions
+## 저자 기여(Author contributions)
 *[본 저자가 실제 저술 시 역할 기입 필요]*
 
-## Competing interests
+## 이해상충(Competing interests)
 *[해당 사항 기입 필요 — 현재 명시된 이해상충 없음]*
 
 ---
 
-## References
+## 참고문헌(References)
 
 [1] Wei, Z., Wang, S., Farris, S. et al. Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry. *Nat. Commun.* **15**, 4337 (2024). https://doi.org/10.1038/s41467-024-48454-3
 
@@ -115,7 +115,7 @@ No analysis code has been written yet. Drag-decomposition post-processing script
 
 [3] Glegg, S. & Devenport, W. *Aeroacoustics of Low Mach Number Flows: Fundamentals, Analysis, and Measurement*, 464–494 (Academic Press, 2017).
 
-[4] Anderson, J. D., Jr. *Fundamentals of Aerodynamics*, 6th edn (McGraw-Hill Education, New York, 2017). Chs. 1, 5 (drag decomposition: pressure vs. skin-friction drag) and Ch. 5 (induced drag, finite-wing theory) — standard reference for the drag-decomposition and propulsive-efficiency relations used in §1, §2.3, §3, and §4.
+[4] Anderson, J. D., Jr. *Fundamentals of Aerodynamics*, 6th edn (McGraw-Hill Education, New York, 2017). Chs. 1, 5 (항력 분리: 압력항력 vs. 표면마찰 항력) and Ch. 5 (유도항력, 유한익 이론) — §1, §2.3, §3, §4에서 사용된 항력 분리 및 추진효율 관계식의 표준 참고문헌.
 
 ---
 
