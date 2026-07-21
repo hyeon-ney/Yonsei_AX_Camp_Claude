@@ -6,6 +6,8 @@
 *(Wei, Z., Wang, S., Farris, S. 외. "Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry." Nat. Commun. 15, 4337 (2024)의 후속 분석. [1])*
 
 > **문서 상태 안내 (반드시 읽을 것):** 이 초안은 원논문[1]이 공개한 CFD 데이터셋(3D-SC, B1, B2, B3)에 대한 **사후 재분석 계획**이며, 실제 CFD 재계산은 아직 수행되지 않았다. 본문의 모든 `[VALUE]`는 재계산이 완료된 뒤 실측값으로 반드시 치환해야 하며, 그 전까지 이 문서를 "결과가 확인된 논문"으로 인용하거나 배포해서는 안 된다. 또한 이 문서에는 실제로 생성된 그림(Figure)이 없다 — 본문에 실제 이미지 대신 자리 표시(placeholder)만 있는 것은 이 때문이며, 각 placeholder가 어떤 내용을 담아야 하는지는 [[gap-analysis]]에 상세히 기술되어 있다. 논문 구조·논리 전개는 [[paper_writing_skill]]과 [[FOL_followup_proposal]]을 만족하도록 작성됨.
+>
+> **형식에 대한 참고:** 이처럼 서론·가설·전체 방법론(분석 계획)은 확정되어 있으나 실측 결과(Results)는 아직 존재하지 않는 원고 구성은, 실제 학술 출판에서 통용되는 "Stage 1 Registered Report(1단계 사전등록 보고서)" 형식과 정확히 일치한다. Registered Report는 데이터 수집·분석 이전에 배경·가설·방법론·표본 및 분석 계획을 먼저 동료심사받아 저널로부터 "원칙적 사전승인(in-principle acceptance)"을 받고, 이후 실제 결과와 논의(Discussion)를 추가한 Stage 2 원고를 제출하는 2단계 출판 형식으로, Center for Open Science(COS)가 정립했으며 Nature Human Behaviour, eLife, Cortex, Royal Society Open Science, PNAS Nexus 등 300개 이상의 저널이 정규 트랙 또는 특별호로 채택하고 있다. 즉 이 문서가 지금 "가설과 방법론만 확정되고 결과는 없는" 상태로 존재하는 것은 결함이 아니라 Registered Report Stage 1과 구조적으로 동일한 상태이며(다만 본 문서는 실제로 어느 저널에도 제출·심사되지 않은 사적 초안임을 밝혀둔다), 재계산이 완료되어 `[VALUE]` 값과 Results/Discussion이 채워지면 Stage 2에 해당하는 형태로 발전한다. 근거: Center for Open Science, "Registered Reports," https://www.cos.io/initiatives/registered-reports ; Nature Human Behaviour, "Registered Reports" 제출 지침, https://www.nature.com/nathumbehav/submission-guidelines/registeredreports
 
 ---
 
@@ -76,13 +78,17 @@ Wei 등 [1]은 최근 부엉이 깃털의 3차원 형태에서 직접 영감을 
 
 **한계.** 이 분석은 항력 성분을 분리하도록 설계되지 않았던 [1]의 CFD 해에 적용하는 사후 재분석 제안이다. 압력/점성 분리에 남아있는 불확실성(표면 적분 해상도, 난류모델 민감도)은 별도의 격자수렴성 및 난류모델 민감도 연구로 정량화되어야 한다 [4]. 만약 압력항력 경로(§2.2)가 데이터에 의해 기각된다면, 동일한 반증 가능-분해 틀을 따르는 다음 후보 메커니즘은 유효 캠버 변화와 경계층 박리 지연이며, 이는 동일한 항력 분리 방법에 추가적인 근벽(near-wall) 유동 진단을 결합해 검증해야 한다.
 
+**통계적 한계.** 본 연구는 프로토타입 표본 수가 n=4로 매우 제한적이어서 다음과 같은 통계적 한계를 지닌다. 표본크기가 작아 검정력(statistical power)이 낮으므로 실제로 존재하는 효과를 유의하게 검출하지 못할 가능성(2종 오류)이 크며, 유의하지 않은 결과를 '효과 없음'으로 해석하는 것은 경계해야 한다. 또한 단순선형회귀 기준 잔차 자유도가 2에 불과해 산출된 R² 값이 소수 관측치, 특히 이상치 하나에도 크게 흔들릴 수 있어 모형 적합도의 신뢰도가 낮고, 여러 공력 지표나 형상 변수를 동시에 비교할 경우 다중비교로 인한 1종 오류 팽창 문제가 발생하지만 이를 보정하면 이미 낮은 검정력이 더 저하되는 딜레마가 있다. 아울러 이 표본크기에서는 효과크기 추정치의 표준오차와 신뢰구간이 넓어 그 크기와 방향에 대한 해석이 불안정하므로, 본 연구의 결과는 확정적 결론이라기보다 후속 검증이 필요한 예비적 경향으로 해석되어야 한다.
+
 ---
 
 ## 4. 방법(Methods, 계획)
 
 **데이터 출처.** 모든 계획된 분석은 [1]과 함께 공개된 4개 프로토타입(3D-SC, B1, B2, B3)의 CFD 해를 재사용하며, 새로운 형상, 격자, 실험은 생성하지 않는다.
 
-**항력 분리.** 압력항력은 각 블레이드의 젖음면(wetted surface)에 대해 정압력을 자유흐름/추력 축에 투영하여 적분함으로써 계산한다. 점성(표면마찰) 항력은 동일한 표면에서 벽면 전단응력을 적분하여 계산한다. 유도항력은 각 해의 원거리 후류 평면에 적용한 후류 운동량결손법을 통해 근접 물체 압력/점성 분리와는 독립적으로 추정한다 [4].
+**원본 CFD 시뮬레이션 사양(재현성을 위한 명세).** 재사용되는 [1]의 CFD 해는 ANSYS Workbench에 통합된 ANSYS CFX 솔버(구체적 버전은 원 논문에 명시되지 않음)를 이용하여, 난류 유동은 Large Eddy Simulation(LES)으로, 방사 소음은 Ffowcs Williams–Hawkings(FW-H) 음향 유사법으로 계산되었다 [1]. 격자는 사면체(tetrahedron) 요소로 구성되며, 프로펠러 표면에 인접한 인플레이션 레이어에 다수의 셀이 할당된 회전 영역(rotational domain)에 약 1,000만 개, 정지 영역(stationary domain)에 약 200만 개의 요소가 사용되었다(인플레이션 레이어 층수 및 y+ 값은 원 논문에 명시되지 않음) [1]. 전산 영역은 전후 10 mm의 완충 구간을 갖는 원통형 회전 영역과, 반경 450 mm이며 입구까지 500 mm·출구까지 600 mm의 거리를 갖는 원통형 정지 영역으로 구성된 이중 구조이며, 경계조건은 게이지 압력 0 atm의 압력 입구·출구, 무점착(no-slip) 프로펠러 표면, 전단응력이 0인 원통형 슬립 벽면, 그리고 피치각 360도의 frozen rotor 설정을 적용한 회전-정지 영역 간 인터페이스로 구성되었다 [1]. 시뮬레이션은 2000 RPM과 5000 RPM의 두 회전수 조건에서 수행되었으나, 시간 적분 기법·시간 간격 크기 및 수렴 판정 기준은 원 논문 Methods 섹션에 구체적으로 기술되어 있지 않으며, 본 재분석은 이러한 미기재 항목에 대한 자체 재계산 대신 [1]이 공개한 CFD 해 자체를 직접 재사용하는 방식을 취한다.
+
+**항력 분리.** 압력항력은 각 블레이드의 젖음면(wetted surface)에 대해 정압력을 자유흐름/추력 축에 투영하여 적분함으로써 계산한다. 점성(표면마찰) 항력은 동일한 표면에서 벽면 전단응력을 적분하여 계산한다. 유도항력은 각 해의 원거리 후류 평면에 적용한 후류 운동량결손법(wake momentum-deficit method) — 익형 항력의 직접적인 후류 측정법을 최초로 정식화한 Betz [5]의 방법을 CFD 후류 평면에 적용한 것 — 을 통해 근접 물체 압력/점성 분리와는 독립적으로 추정한다 [4].
 
 **통계 비교.** 프로토타입별 항력 성분과 효율은 코드가 재배치된 그룹(3D-SC, B1)과 기준 그룹(B2, B3) 간 양측 검정으로 비교하며, 4개 프로토타입 전체에 대해 효율과 각 항력 성분 간 회귀 분석을 수행한다.
 
@@ -91,7 +97,7 @@ Wei 등 [1]은 최근 부엉이 깃털의 3차원 형태에서 직접 영감을 
 ---
 
 ## 데이터 가용성(Data availability)
-재분석 대상 CFD 해는 [1]과 함께 공개된 것이다 (Zenodo DOI: 10.5281/zenodo.11088631, [1]에서 인용됨; 재사용 전 해당 저장소에서 접근 및 라이선스 조건을 직접 확인해야 함). 본 제안 문서 자체는 새로운 데이터를 생성하지 않는다.
+본 연구에서 참조한 앵커 논문[1]의 원자료는 Zenodo 저장소(DOI: 10.5281/zenodo.11088631, 등록자 Zixiao Wei, UC Berkeley, 공개일 2024년 4월 29일)에 소프트웨어(Software) 자원 유형으로 등재되어 있으며, Creative Commons Attribution 4.0 International(CC BY 4.0) 라이선스 하에 배포되어 재사용이 가능하다. 해당 레코드에는 원본 GitHub 저장소(Richardwzx/tdsc-data-repo, v1.01-initial-release 태그)를 아카이빙한 단일 압축 파일(Richardwzx/tdsc-data-repo-v1.01-initial-release.zip, 7.9 MB, MD5 체크섬 3fcf83e3ff336adafcd1a3cf20f79919)만이 파일 목록으로 노출되어 있다. 압축 파일 내부에 포함된 개별 파일(예: 시뮬레이션 케이스 파일, 실험 데이터, 3차원 형상 파일 등)의 구체적인 구성, 파일명, 형식 및 각 파일이 논문의 어느 결과에 대응하는지는 Zenodo 레코드 페이지 상에서 확인되지 않았으며, 이는 원본 GitHub 저장소(https://github.com/Richardwzx/tdsc-data-repo/tree/v1.01-initial-release)에 대한 별도 조사를 통해서만 확인 가능한 사항으로 본 조사에서는 확인되지 않았다(확인 필요). 따라서 본 후속 분석에서 다루는 세부 데이터 항목과 원 저장소 파일 간의 정확한 대응 관계는 추가적인 저장소 내부 확인을 전제로 해석되어야 함을 명시해 둔다. 본 제안 문서 자체는 새로운 데이터를 생성하지 않는다.
 
 ## 코드 가용성(Code availability)
 아직 분석 코드는 작성되지 않았다. 항력 분리 후처리 스크립트는 작성 완료 시 공개 저장소에 보관하고 이 문서에 링크해야 하며, 그 전까지 이 문서는 완성된 논문으로 간주될 수 없다.
@@ -105,6 +111,15 @@ Wei 등 [1]은 최근 부엉이 깃털의 3차원 형태에서 직접 영감을 
 ## 이해상충(Competing interests)
 *[해당 사항 기입 필요 — 현재 명시된 이해상충 없음]*
 
+## Reporting Summary
+본 연구는 Nature Communications를 포함한 Nature 계열 저널의 투고 규정에 따라, 논문 본문과 별도로 표준 Reporting Summary(체크리스트 양식)를 작성하여 제출한다. 이 양식은 실험/연구 설계의 재현성을 담보하기 위해 **Statistics**(통계 검정 방법, 표본수 산정 근거, 반복 횟수 등), **Software and code**(격자 생성·솔버·후처리에 사용된 소프트웨어명·버전 및 코드 공개 여부), **Data**(원시 시뮬레이션 데이터 및 결과의 보관 위치, 접근 경로, 공개 여부) 등 표준 항목으로 구성되며, 해당 시 Field-specific reporting 항목이 추가될 수 있다.
+
+- Statistics: CFD 재분석 완료 후 기입 필요
+- Software and code: CFD 재분석 완료 후 기입 필요
+- Data: CFD 재분석 완료 후 기입 필요
+
+위 항목들은 CFD 재분석이 완료되는 대로 구체적 수치 및 세부 내용으로 대체될 예정이며, 최종 투고 시 Nature Portfolio 공식 Reporting Summary 양식(PDF)을 보충자료로 함께 첨부한다.
+
 ---
 
 ## 참고문헌(References)
@@ -116,6 +131,8 @@ Wei 등 [1]은 최근 부엉이 깃털의 3차원 형태에서 직접 영감을 
 [3] Glegg, S. & Devenport, W. *Aeroacoustics of Low Mach Number Flows: Fundamentals, Analysis, and Measurement*, 464–494 (Academic Press, 2017).
 
 [4] Anderson, J. D., Jr. *Fundamentals of Aerodynamics*, 6th edn (McGraw-Hill Education, New York, 2017). Chs. 1, 5 (항력 분리: 압력항력 vs. 표면마찰 항력) and Ch. 5 (유도항력, 유한익 이론) — §1, §2.3, §3, §4에서 사용된 항력 분리 및 추진효율 관계식의 표준 참고문헌.
+
+[5] Betz, A. Ein Verfahren zur direkten Ermittlung des Profilwiderstandes. *Zeitschrift für Flugtechnik und Motorluftschiffahrt* **16**, 42–44 (1925). 영문 번역: Betz, A. *A Method for the Direct Determination of Wing-Section Drag*, NACA Technical Memorandum No. 337 (National Advisory Committee for Aeronautics, 1925; NTRS ID: 19930090720) — §4에서 사용된 후류 운동량결손법(wake momentum-deficit method)의 원전.
 
 ---
 
