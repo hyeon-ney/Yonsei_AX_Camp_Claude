@@ -1,97 +1,126 @@
 # Pressure-Drag Reduction, Not Induced Drag, Explains the Propulsive Efficiency Gain of Cicada-Inspired Chord Redistribution
 
-*(Follow-up analysis of Wei, Wang, Farris et al., "Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry," Nat. Commun. 2024, DOI: 10.1038/s41467-024-48454-3)*
+**Author(s):** *[저자명 기입 필요]*
+**Affiliation:** *[소속 기입 필요]*
 
-> **문서 상태 안내:** 이 초안은 원논문이 공개한 CFD 데이터셋(3D-SC, B1, B2, B3)에 대한 **사후 재분석**을 전제로 작성되었다. 아래 Results의 정량값은 [[FOL_followup_proposal]]의 검증 설계(§검증 설계)에 따라 실제 CFD 재계산이 수행되었을 때 채워 넣어야 할 자리이며, 현재는 가설이 지지되는 경우의 **placeholder 수치**로 표시했다 (`[VALUE]` 형식은 실제 재계산 결과로 반드시 치환 필요). 논문 구조·논리 전개는 [[paper_writing_skill]]과 [[FOL_followup_proposal]]을 완전히 만족하도록 작성됨.
+*(Follow-up analysis of Wei, Z., Wang, S., Farris, S. et al. "Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry." Nat. Commun. 15, 4337 (2024). [1])*
+
+> **문서 상태 안내 (반드시 읽을 것):** 이 초안은 원논문[1]이 공개한 CFD 데이터셋(3D-SC, B1, B2, B3)에 대한 **사후 재분석 계획**이며, 실제 CFD 재계산은 아직 수행되지 않았다. 본문의 모든 `[VALUE]`는 재계산이 완료된 뒤 실측값으로 반드시 치환해야 하며, 그 전까지 이 문서를 "결과가 확인된 논문"으로 인용하거나 배포해서는 안 된다. 또한 이 문서에는 실제로 생성된 그림(Figure)이 없다 — 본문에서 그림을 언급하지 않은 것은 이 때문이며, 이는 이전 버전의 오류(존재하지 않는 "Fig. 1a" 인용)를 수정한 것이다. 논문 구조·논리 전개는 [[paper_writing_skill]]과 [[FOL_followup_proposal]]을 만족하도록 작성됨.
 
 ---
 
 ## Abstract
 
-Combining owl-feather serrations with cicada-wing planform geometry has recently been shown to enable propellers that are simultaneously quieter and more propulsively efficient than conventional designs. While the noise-reduction pathway of this hybrid design has been mechanistically resolved down to coherent-vortex-structure formation and its regime-dependent suppression of dipole and quadrupole sources, the origin of the efficiency gain was left as an untested hypothesis, attributed only qualitatively to the cicada-derived chord distribution. Here we test this hypothesis directly by decomposing the total aerodynamic drag of the four previously published prototypes (3D-SC, B1, B2, B3) into pressure-drag and viscous/induced-drag components using their existing CFD solutions, without generating any new geometry or experiment. We find that [VALUE]% of the propulsive-efficiency gap between the high-efficiency prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) is accounted for by a reduction in pressure drag ([VALUE]% vs [VALUE]%), while induced-drag components remain statistically unchanged (Δ = [VALUE]%, p = [VALUE]). This confirms that the cicada-derived chord redistribution improves efficiency through a pressure-drag mechanism distinct from, and independent of, the vorticity-based noise-suppression mechanism of the owl serrations. The result establishes that the two bio-inspired design axes — serration for acoustics, planform for aerodynamics — can be optimized independently, simplifying future design iteration.
+Combining owl-feather serrations with cicada-wing planform geometry has recently been shown to enable propellers that are simultaneously quieter and more propulsively efficient than conventional designs [1]. While the noise-reduction pathway of this hybrid design has been mechanistically resolved down to coherent-vortex-structure (CVS) formation and its regime-dependent suppression of dipole and quadrupole sources [1], the origin of the efficiency gain was left as an untested hypothesis in that study, attributed only qualitatively to the cicada-derived chord distribution. Here we propose to test this hypothesis directly by decomposing the total aerodynamic drag of the four previously published prototypes (3D-SC, B1, B2, B3) [1] into pressure-drag and viscous/induced-drag components, following standard drag-decomposition practice [2], using their existing CFD solutions and without generating any new geometry or experiment. If confirmed, we predict that the majority of the propulsive-efficiency gap between the high-efficiency prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) would be accounted for by a reduction in pressure drag, while induced-drag components would remain statistically unchanged. Such a result would confirm that the cicada-derived chord redistribution improves efficiency through a mechanism distinct from, and independent of, the vorticity-based noise-suppression mechanism of the owl serrations [1], establishing that the two bio-inspired design axes — serration for acoustics, planform for aerodynamics — can be optimized independently.
 
 ---
 
 ## 1. Introduction
 
-Owls achieve near-silent flight through serrated leading-edge feather morphology, and prior bio-inspired propeller designs have exploited two-dimensional analogues of this serration to reduce tonal and broadband noise. A recent study integrated a fully three-dimensional, sinusoidal serration topology — inspired directly by the 3D morphology of owl feathers rather than simplified 2D patterns — with a cicada-wing-derived planform defined by fifth-order polynomial chord distributions on the leading and trailing edges. The resulting hybrid prototype (3D-SC) achieved up to 5.5 dB of sound-pressure-level reduction and a greater than 20% increase in propulsive efficiency relative to benchmark propellers, with the noise reduction explained through a detailed, Reynolds-number-conditioned mechanism: at low rotational speed, serration-induced coherent vortex structures (CVS) reduce harmonic loading and suppress dipole (tonal) noise; at high rotational speed, the same CVS are preserved longer, delaying cascade to dissipative eddies and suppressing quadrupole (broadband) noise.
+Biological structures shaped by millions of years of selective pressure have long informed engineering design, from surface texturing to planform geometry [3]. Owls in particular achieve near-silent flight through serrated leading-edge feather morphology, a trait that has motivated a substantial body of bio-inspired aeroacoustic research [3,4]. Prior bio-inspired propeller designs exploited two-dimensional analogues of this serration to reduce tonal and broadband noise, but such simplified two-dimensional patterns limit the achievable noise reduction and often trade off against aerodynamic performance [1].
 
-The efficiency side of the result, however, was supported only at the level of correlation: the cicada-derived planform was associated with higher propulsive efficiency, but no intermediate fluid-mechanical mechanism was proposed or tested. This is a meaningful gap. Unlike the noise pathway — where each step (vorticity enhancement → CVS formation → dipole/quadrupole suppression) is physically motivated and independently falsifiable — the efficiency claim rests on a single, unconditioned implication: *cicada-shape → efficiency*. Because propulsive efficiency is a composite quantity determined by multiple drag components (pressure drag from separation and pressure recovery, induced drag from tip/wake vortices, and viscous/skin-friction drag), this correlation is consistent with several distinct and mutually exclusive physical explanations.
+Wei et al. [1] recently integrated a fully three-dimensional, sinusoidal serration topology — inspired directly by the 3D morphology of owl feathers rather than simplified 2D patterns — with a cicada-wing-derived planform defined by fifth-order polynomial chord distributions on the leading and trailing edges. The resulting hybrid prototype (3D-SC) achieved up to 5.5 dB of sound-pressure-level reduction and a greater than 20% increase in propulsive efficiency relative to benchmark propellers [1]. In that work, the noise reduction was explained through a detailed, Reynolds-number-conditioned mechanism: at low rotational speed, serration-induced coherent vortex structures (CVS) reduce harmonic loading and suppress dipole (tonal) noise; at high rotational speed, the same CVS are preserved longer, delaying cascade to dissipative eddies and suppressing quadrupole (broadband) noise [1].
 
-We hypothesize specifically that the cicada-inspired chord redistribution improves efficiency by reducing **pressure drag** — i.e., by reshaping the chordwise pressure distribution to delay or weaken flow separation — rather than by reducing induced drag or viscous drag. This hypothesis is directly testable without any new experiment: the original study already published CFD solutions for four prototypes spanning the serration/planform design space (3D-SC: owl serration + cicada planform; B1: a second cicada-planform variant; B2, B3: baseline/conventional planforms), from which pressure- and viscous/induced-drag components can be separately integrated. We perform this decomposition and evaluate whether the efficiency ranking across the four prototypes tracks the pressure-drag ranking, the induced-drag ranking, or neither.
+The efficiency side of that result, however, was supported only at the level of correlation: the cicada-derived planform was associated with higher propulsive efficiency, but no intermediate fluid-mechanical mechanism was proposed or tested [1]. This is a meaningful gap. Unlike the noise pathway — where each step (vorticity enhancement → CVS formation → dipole/quadrupole suppression) is physically motivated and independently falsifiable — the efficiency claim in [1] rests on a single, unconditioned implication: cicada-shape → efficiency. Because propulsive efficiency is a composite quantity determined by multiple drag components — pressure drag from separation and pressure recovery, induced drag from tip/wake vortices, and viscous/skin-friction drag [2] — this correlation is consistent with several distinct and mutually exclusive physical explanations.
+
+We hypothesize specifically that the cicada-inspired chord redistribution improves efficiency by reducing pressure drag — i.e., by reshaping the chordwise pressure distribution to delay or weaken flow separation — rather than by reducing induced drag or viscous drag. This hypothesis is directly testable without any new experiment: Wei et al. [1] already published CFD solutions for four prototypes spanning the serration/planform design space (3D-SC: owl serration + cicada planform; B1: a second cicada-planform variant; B2, B3: baseline/conventional planforms), from which pressure- and viscous/induced-drag components can, in principle, be separately integrated [2]. We propose to perform this decomposition and evaluate whether the efficiency ranking across the four prototypes tracks the pressure-drag ranking, the induced-drag ranking, or neither.
 
 ---
 
-## 2. Results
+## 2. Proposed Results *(pending CFD reanalysis — see status note above)*
+
+The subsections below describe the analysis to be performed and the falsifiable predictions each step makes, mapped to the FOL steps in [[FOL_followup_proposal]]. **No values in this section are measured yet.**
 
 ### 2.1 Chord redistribution alters the drag decomposition (cf. FOL step 8a)
 
-The four prototypes differ systematically in their leading/trailing-edge chord distribution functions. 3D-SC and B1 both incorporate the cicada-derived fifth-order polynomial chord redistribution, producing a shifted point of maximum chord and a more gradual chord taper toward the tip relative to the conventional planforms of B2 and B3 (Fig. 1a). This confirms the structural precondition (ChordRedist(x)) required before any drag-mechanism claim can be evaluated: 3D-SC and B1 instantiate the redistributed planform, while B2 and B3 serve as geometry-matched controls that do not.
+The four prototypes reported in [1] differ systematically in their leading/trailing-edge chord distribution functions: 3D-SC and B1 incorporate the cicada-derived fifth-order polynomial chord redistribution, while B2 and B3 use conventional planforms [1]. This is the structural precondition (ChordRedist(x)) required before any drag-mechanism claim can be evaluated, and requires no new analysis to confirm — it is already established in [1].
 
-### 2.2 Pressure drag, not induced drag, tracks the efficiency gap (cf. FOL step 8b — hypothesis test)
+### 2.2 Pressure drag, not induced drag, is predicted to track the efficiency gap (cf. FOL step 8b — hypothesis test)
 
-Decomposing the total drag coefficient recovered from each prototype's CFD solution yields the following (thrust-matched, benchmark RPM):
+**Planned analysis:** decompose the total drag coefficient recovered from each prototype's CFD solution in [1] into pressure drag $C_{D,p}$, induced drag $C_{D,i}$, and viscous drag $C_{D,v}$, using the surface-pressure and wake-momentum methods described in §4 (Methods).
 
-| Prototype | Chord redistribution | Pressure drag $C_{D,p}$ | Induced drag $C_{D,i}$ | Viscous drag $C_{D,v}$ | Propulsive efficiency η |
+**Prediction table (to be filled with measured values):**
+
+| Prototype | Chord redistribution | $C_{D,p}$ | $C_{D,i}$ | $C_{D,v}$ | Propulsive efficiency η |
 |---|---|---|---|---|---|
-| 3D-SC | yes | [VALUE] | [VALUE] | [VALUE] | [VALUE]% (+20%+ vs. baseline) |
-| B1 | yes | [VALUE] | [VALUE] | [VALUE] | [VALUE]% |
-| B2 | no | [VALUE] | [VALUE] | [VALUE] | [VALUE]% (baseline) |
-| B3 | no | [VALUE] | [VALUE] | [VALUE] | [VALUE]% (baseline) |
+| 3D-SC | yes | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (reported: +20%+ vs. baseline [1]) |
+| B1 | yes | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% |
+| B2 | no | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (baseline) |
+| B3 | no | `[VALUE]` | `[VALUE]` | `[VALUE]` | `[VALUE]`% (baseline) |
 
-Across the four prototypes, pressure drag decreases monotonically with the presence of chord redistribution ($C_{D,p}^{3D\text{-}SC}, C_{D,p}^{B1} < C_{D,p}^{B2}, C_{D,p}^{B3}$; two-tailed comparison, p = [VALUE]), while induced drag shows no significant difference across the group (Δ$C_{D,i}$ = [VALUE], p = [VALUE], consistent with InducedDragUnchanged(x)). Viscous drag varies only marginally and does not correlate with the redistribution variable. A linear regression of propulsive efficiency against pressure drag across the four prototypes yields $R^2$ = [VALUE], versus $R^2$ = [VALUE] against induced drag — i.e., pressure drag is the dominant predictor of the observed efficiency ranking.
+**Falsifiable prediction:** if the hypothesis holds, $C_{D,p}^{3D\text{-}SC}, C_{D,p}^{B1} < C_{D,p}^{B2}, C_{D,p}^{B3}$ with statistical significance, while $\Delta C_{D,i}$ across the group is not significant. A regression of η against $C_{D,p}$ should yield higher $R^2$ than η against $C_{D,i}$.
 
-### 2.3 Pressure-drag reduction quantitatively accounts for the efficiency gain (cf. FOL step 8c)
+### 2.3 Pressure-drag reduction is predicted to quantitatively account for the efficiency gain (cf. FOL step 8c)
 
-Propagating the measured $\Delta C_{D,p}$ between the chord-redistributed prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) through the standard propulsive-efficiency relation accounts for [VALUE]% of the previously reported >20% efficiency improvement, with the residual [VALUE]% attributable to viscous-drag and thrust-distribution effects. This closes the causal chain hypothesized in [[FOL_followup_proposal]]: ChordRedist(x) → PressDragRed(x) → AeroEff(x).
+**Planned analysis:** propagate the measured $\Delta C_{D,p}$ between the chord-redistributed prototypes (3D-SC, B1) and the baseline prototypes (B2, B3) through the standard propulsive-efficiency relation [2], and compare the resulting predicted efficiency gain against the >20% efficiency improvement reported in [1]. We will also test whether this relationship holds across both rotational-speed regimes used in the acoustic analysis of [1] (2000 RPM and 5000 RPM), to check whether the efficiency mechanism is Reynolds-number-conditioned as the noise mechanism is [1].
 
-We further verify that this relationship holds across rotational speed (2000 RPM and 5000 RPM, matching the two regimes used in the acoustic analysis of the anchor paper), confirming that the efficiency mechanism — unlike the noise mechanism — is not itself Reynolds-number-conditioned: the pressure-drag reduction is present at both regimes with comparable magnitude ([VALUE]% vs [VALUE]%).
+### 2.4 Alternative mechanisms to be ruled out
 
-### 2.4 Alternative mechanisms ruled out
-
-Because the acoustic mechanism of the anchor paper is driven by coherent vortex structures (CVS) generated by the owl serration, a possible confound is that CVS formation itself alters the pressure field and thus co-varies with pressure drag. We rule this out by comparing B1 (cicada planform, no owl serration) against 3D-SC (both features): B1 shows a comparable pressure-drag reduction and efficiency gain to 3D-SC despite lacking the serration-driven CVS mechanism entirely (Δη between 3D-SC and B1 = [VALUE]%, not significant). This confirms that the efficiency mechanism (planform → pressure drag) and the acoustic mechanism (serration → vorticity) are structurally and causally independent, as required for the two design axes to be optimized separately.
+Because the acoustic mechanism in [1] is driven by coherent vortex structures generated by the owl serration, a possible confound is that CVS formation itself alters the pressure field and thus co-varies with pressure drag. **Planned control:** compare B1 (cicada planform, no owl serration) against 3D-SC (both features) [1]; if B1 shows a comparable pressure-drag reduction and efficiency gain to 3D-SC despite lacking the serration-driven CVS mechanism, this would confirm that the efficiency mechanism (planform → pressure drag) and the acoustic mechanism (serration → vorticity) are structurally independent.
 
 ---
 
 ## 3. Discussion
 
-The results support the hypothesis, previously left untested in the anchor study, that the propulsive-efficiency gain of the cicada-inspired hybrid propeller arises from a reduction in pressure drag driven by chordwise redistribution — not from induced-drag reduction, and not as a byproduct of the serration-driven vortex mechanism responsible for noise suppression. This resolves the logical gap identified at step A8 of the anchor paper's causal model (CicShape(x) → AeroEff(x)), replacing a single unconditioned implication with a falsifiable three-step mechanism (ChordRedist → PressDragRed → AeroEff) supported by drag-component evidence rather than efficiency correlation alone.
+If the predictions in §2.2–2.4 are confirmed, this analysis would resolve the logical gap identified at step A8 of the causal model implicit in [1] (CicShape(x) → AeroEff(x)), replacing a single unconditioned implication with a falsifiable three-step mechanism (ChordRedist → PressDragRed → AeroEff) supported by drag-component evidence rather than efficiency correlation alone. Practically, confirming the independence proposed in §2.4 would mean the two bio-inspired design levers reported in [1] — 3D owl-serration topology for acoustic performance, and cicada-derived planform for aerodynamic efficiency — could be tuned separately without cross-interference, simplifying future multi-objective optimization of silent-efficient rotor design.
 
-Practically, the independence demonstrated in §2.4 means the two bio-inspired design levers — 3D owl-serration topology for acoustic performance, and cicada-derived planform for aerodynamic efficiency — can be tuned separately without cross-interference, simplifying future multi-objective optimization of silent-efficient rotor design.
-
-**Limitations.** This analysis is a post-hoc reanalysis of previously published CFD solutions and was not part of an experiment designed to isolate drag components; residual uncertainty in the pressure/viscous decomposition (surface-integration resolution, turbulence-model sensitivity) should be quantified with dedicated grid-convergence and turbulence-model sensitivity studies. If the pressure-drag pathway had instead been rejected by the data (i.e., Δ$C_{D,p}$ not significant, or $R^2$ low), the next candidate mechanisms to test — following the same falsifiable-decomposition template — would be effective camber change and boundary-layer separation delay, which would require the same drag-decomposition method applied with additional near-wall flow diagnostics.
+**Limitations.** This is a post-hoc reanalysis proposal applied to CFD solutions from [1] that were not generated to isolate drag components; residual uncertainty in the pressure/viscous decomposition (surface-integration resolution, turbulence-model sensitivity) will need to be quantified with dedicated grid-convergence and turbulence-model sensitivity studies [2]. If the pressure-drag pathway (§2.2) were instead rejected by the data, the next candidate mechanisms to test — following the same falsifiable-decomposition template — would be effective camber change and boundary-layer separation delay, requiring the same drag-decomposition method applied with additional near-wall flow diagnostics.
 
 ---
 
-## 4. Methods
+## 4. Methods (planned)
 
-**Data source.** All results reuse the CFD solutions for the four prototypes (3D-SC, B1, B2, B3) published alongside the anchor study; no new geometry, mesh, or experiment was generated for this analysis.
+**Data source.** All planned analysis reuses the CFD solutions for the four prototypes (3D-SC, B1, B2, B3) published alongside [1]; no new geometry, mesh, or experiment will be generated.
 
-**Drag decomposition.** Pressure drag was computed by integrating static-pressure forces over each blade's wetted surface, projected onto the freestream/thrust axis. Viscous (skin-friction) drag was computed by integrating wall shear stress over the same surface. Induced drag was estimated independently via a wake momentum-deficit method applied to the far-wake plane of each solution, separating it from the near-body pressure/viscous split.
+**Drag decomposition.** Pressure drag will be computed by integrating static-pressure forces over each blade's wetted surface, projected onto the freestream/thrust axis. Viscous (skin-friction) drag will be computed by integrating wall shear stress over the same surface. Induced drag will be estimated independently via a wake momentum-deficit method applied to the far-wake plane of each solution, following standard aerodynamic decomposition practice [2].
 
-**Statistical comparison.** Prototype-wise drag components and efficiencies were compared using two-tailed tests across the chord-redistributed group (3D-SC, B1) versus the baseline group (B2, B3); regression of efficiency against each drag component was performed across all four prototypes.
+**Statistical comparison.** Prototype-wise drag components and efficiencies will be compared using two-tailed tests across the chord-redistributed group (3D-SC, B1) versus the baseline group (B2, B3); regression of efficiency against each drag component will be performed across all four prototypes.
 
-**Reproducibility.** All post-processing was applied uniformly across prototypes using identical integration procedures and solver settings as the anchor study, per the verification protocol specified in [[FOL_followup_proposal]].
+**Reproducibility.** Post-processing will be applied uniformly across prototypes using identical integration procedures and solver settings as [1], per the verification protocol specified in [[FOL_followup_proposal]].
 
 ---
 
 ## Data availability
-CFD solutions reanalyzed here are those published with the anchor study (Nat. Commun. 2024, DOI: 10.1038/s41467-024-48454-3). Drag-decomposition post-processing scripts and derived values (to replace `[VALUE]` placeholders above) should be archived alongside this manuscript upon completion of the CFD reanalysis.
+The CFD solutions to be reanalyzed are those published with [1] (Zenodo DOI: 10.5281/zenodo.11088631, as cited in [1]; access and licensing terms should be verified directly with that repository before reuse). No new data are generated by this proposal document.
+
+## Code availability
+No analysis code has been written yet. Drag-decomposition post-processing scripts, once written, should be archived in a public repository and linked here before this document is considered a completed manuscript.
+
+## Acknowledgements
+*[본 저자가 실제 저술 시 펀딩/기관 정보 기입 필요]*
+
+## Author contributions
+*[본 저자가 실제 저술 시 역할 기입 필요]*
+
+## Competing interests
+*[해당 사항 기입 필요 — 현재 명시된 이해상충 없음]*
+
+---
+
+## References
+
+[1] Wei, Z., Wang, S., Farris, S. et al. Towards silent and efficient flight by combining bioinspired owl feather serrations with cicada wing geometry. *Nat. Commun.* **15**, 4337 (2024). https://doi.org/10.1038/s41467-024-48454-3
+
+[2] Anderson, J. D. *Fundamentals of Aerodynamics* (McGraw-Hill Education, various editions) — standard reference for pressure/induced/viscous drag decomposition and propulsive efficiency relations.
+
+[3] Wang, Y., Zhao, K., Lu, X.-Y., Song, Y.-B. & Bennett, G. J. Bio-inspired aerodynamic noise control: a bibliographic review. *Appl. Sci.* **9**, 2224 (2019). https://doi.org/10.3390/app9112224
+
+[4] Glegg, S. & Devenport, W. *Aeroacoustics of Low Mach Number Flows: Fundamentals, Analysis, and Measurement*, 464–494 (Academic Press, 2017).
 
 ---
 
 ## FOL 충족 여부 체크 (완결성 검증)
 
-| FOL 단계 (from [[FOL_followup_proposal]]) | 이 논문에서 충족한 섹션 |
+| FOL 단계 (from [[FOL_followup_proposal]]) | 이 문서에서 다룬 위치 |
 |---|---|
-| 1–7 (D→Owl∧CicShape→CVS→...→Silent) | §1 Introduction에서 앵커 논문 인용으로 전제, 본 논문의 검증 범위 밖임을 명시 |
-| 8a: CicShape(p) → ChordRedist(p) | §2.1 |
-| 8b: ChordRedist(p) → PressDragRed(p) **[핵심 검증]** | §2.2 (정량 검증), §2.4 (교란변수 배제) |
-| 8c: PressDragRed(p) → AeroEff(p) | §2.3 |
-| 9: AeroEff(p) → Eff(p) | §2.3 결론 문장 |
-| 10: Silent(p) ∧ Eff(p) → SE(p) | §3 Discussion 첫 문단에서 재확인 (앵커 논문 결론과 정합) |
+| 1–7 (D→Owl∧CicShape→CVS→...→Silent) | §1 Introduction에서 [1] 인용으로 전제, 본 문서의 검증 범위 밖임을 명시 |
+| 8a: CicShape(p) → ChordRedist(p) | §2.1 (이미 [1]에서 확립됨, 추가 분석 불필요) |
+| 8b: ChordRedist(p) → PressDragRed(p) **[핵심 검증 대상]** | §2.2 (예정된 정량 검증), §2.4 (예정된 교란변수 배제) |
+| 8c: PressDragRed(p) → AeroEff(p) | §2.3 (예정) |
+| 9: AeroEff(p) → Eff(p) | §2.3 결론 문장 (예정) |
+| 10: Silent(p) ∧ Eff(p) → SE(p) | §3 Discussion 첫 문단 (예정, [1]의 결론과 정합 확인) |
 
-모든 FOL 단계가 논문 내 최소 한 섹션에 대응되어 있으며, 특히 원래 취약했던 8b가 §2.2/§2.4에서 반증 가능한 정량 검증으로 뒷받침됨.
+**중요:** 위 표는 "이 문서가 논리적으로 어디를 다루는가"를 보여줄 뿐, **8b~10은 아직 실측으로 검증되지 않은 예정된 분석**이다. 이 점을 이전 버전보다 명확히 구분했다.
 
 ## 관련 문서
 - [[FOL_nature_paper]]
